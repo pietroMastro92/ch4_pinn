@@ -14,12 +14,15 @@ def train_model(config: DictConfig):
     input_path = abspath(config.processed.path)
     output_path = abspath(config.final.path)
 
+    print("Questi path saranno utili per tenere traccia dei vari set di parametri utilizzati per addestrare i modelli")
+    print("il package hydra si occupa di tener traccia di tutte le configurazioni")
     print(f"Train modeling using {input_path}")
     print(f"Model used: {config.model.name}")
     print(f"Save the output to {output_path}")
 
 
-        # Synthetic data generated from sin function over [0, 2pi]
+
+    # Synthetic data generated from sin function over [0, 2pi]
     x_true = np.linspace(0, np.pi*2, 10000)
     y_true = np.sin(x_true)
     dy_true = np.cos(x_true)
@@ -54,7 +57,6 @@ def train_model(config: DictConfig):
                             "decay_epochs": 10,
                             "verify": False},
                 batch_size=32,
-                # adaptive_weights={'method': "SASW", "eta": 0.1, "d_mask_func": lambda x: np.exp(x)},
                 adaptive_weights={'method': "CLW", 'initial_weights': [0.1, 1.], 'final_weights': [2., 3.], 'curriculum_epochs': 20, "delay_epochs": 10},
                 save_weights={'path': 'test', 'freq': 100}
                 )
