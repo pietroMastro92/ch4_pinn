@@ -11,7 +11,9 @@ hydra-core = "^1.1.1"
 pdoc3 = "^0.10.0"
 notebook = "^6.4.10"
 pre-commit = "^2.19.0"
-sciann-macos = "^0.6.7.3"
+scikit-learn = "^1.2.0"
+sciann = "^0.6.8.6"
+matplotlib = "^3.6.2"
 
 
 [tool.poetry.dev-dependencies]
