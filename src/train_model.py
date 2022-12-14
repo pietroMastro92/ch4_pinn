@@ -47,7 +47,7 @@ def train_model(config: DictConfig):
     # Training: .train runs the optimization and finds the parameters.
     model.train(x_true,
                 [y_true, dy_true],
-                epochs=200,
+                epochs=10,
                 learning_rate={"scheduler": "ExponentialDecay",
                             "initial_learning_rate": 1e-3,
                             "final_learning_rate": 1e-5,
