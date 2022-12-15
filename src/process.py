@@ -16,6 +16,7 @@ from sklearn.preprocessing import StandardScaler
 from hydra.utils import to_absolute_path as abspath
 from IasiNoiseTransformer import IasiNoiseTransformer
 from IasiPerBandPcaTransformer import IasiPerBandPcaTransformer
+from Costants import Costants
 
 @hydra.main(config_path="../config", config_name="main")
 def process_data(config: DictConfig):
@@ -27,6 +28,7 @@ def process_data(config: DictConfig):
     
     logging.info(f"Process data using {raw_path}")
 
+    # TODO: CREARE UNA CLASSE DI COSTANTI e USARE HYDRA PER QUELLO CHE SERVE NON COME PROXY PER LE COSTANTI
     # ? SHOULD WE LOAD/SAVE DATA USING A SPECIFIC FILE FORMAT
     # * FOR THE MOMENT WE ARE USING A PANDAS DATAFRAME SAVED WITH JOBLIB IN WICH THERE ARE ALL THE DATA NEEDED
     # * THE DATAFRAME HAS BEEN GENERATED USING THE 20% OF THE TOTAL DATASET OF SIMULATED MEASUREMENT FROM SIGMA-IASI
@@ -49,7 +51,10 @@ def process_data(config: DictConfig):
     #*PROCESSING OF INPUT DATA
     logging.info("INPUT PREPROCESSING START")
     ts = time.time()
-    X_train, input_preprocessor = process_input(X_train, iasi_noise, orth_base, processing_columns)
+    X_train, input_preprocessor = process_input(X_train, iasi_noise, 
+                                                orth_base, 
+                                                processing_columns.iasi_pcs_bnd1,
+                                                processing_columns.iasi_pcs_bnd2)
     tf = time.time()
     logging.info("INPUT PREPROCESSING FINISH. TIME ELAPSED: %0.3fs" % tf)
 
@@ -60,14 +65,13 @@ def process_data(config: DictConfig):
     save(y_train, processed_path_output)
 
 
-def process_input(X, iasi_noise_matrix, orth_base, processing_columns):
-    iasi_pcs_bnd1 = 90
-    iasi_pcs_bnd2 = 120
-    #*DEFINE A PROCESSING PIPELINE
-    iasi_scaler_features_bnd1 = [processing_columns.iasi_pc_bnd1 + " " + str(i + 1) for i in range(iasi_pcs_bnd1)]
-    iasi_scaler_features_bnd2 = [processing_columns.iasi_pc_bnd2 + " " + str(i + 1) for i in range(iasi_pcs_bnd2)]
-    vza_scaler_features = [processing_columns.vza]
-    surface_pressure_scaler_features = [processing_columns.surface_pressure]
+def process_input(X, iasi_noise_matrix, orth_base, iasi_pcs_bnd1, iasi_pcs_bnd2):
+
+    #*DEFINING A PROCESSING PIPELINE
+    iasi_scaler_features_bnd1 = [Costants.IASI_PC_BND1 + " " + str(i + 1) for i in range(iasi_pcs_bnd1)]
+    iasi_scaler_features_bnd2 = [Costants.IASI_PC_BND2 + " " + str(i + 1) for i in range(iasi_pcs_bnd2)]
+    vza_scaler_features = [Costants.VZA]
+    surface_pressure_scaler_features = [Costants.SURFACE_PRESSURE]
 
     scaler_preprocessor = ColumnTransformer(
                                             transformers=[('iasi1', StandardScaler(), iasi_scaler_features_bnd1),
@@ -80,8 +84,8 @@ def process_input(X, iasi_noise_matrix, orth_base, processing_columns):
 
     preprocessing_pipeline = Pipeline(
                              steps=[('iasi_noise', IasiNoiseTransformer(iasi_noise_matrix)),
-                                    ('iasi_pca', IasiPerBandPcaTransformer(orth_base[processing_columns.bnd1],
-                                                                           orth_base[processing_columns.bnd2])),
+                                    ('iasi_pca', IasiPerBandPcaTransformer(orth_base[Costants.EUMETSAT_BND1],
+                                                                           orth_base[Costants.EUMETSAT_BND2])),
                                     ('standard_scaling', scaler_preprocessor)
                                     ])
     X_processed = preprocessing_pipeline.fit_transform(X)
@@ -96,5 +100,6 @@ def save(data, path):
 
 
 if __name__ == "__main__":
+    logging.getLogger(__name__)
     logging.basicConfig(filename='logging_output.log', level=logging.DEBUG)
     process_data()

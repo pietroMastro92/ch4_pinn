@@ -3,7 +3,7 @@ import pandas as pd
 from hydra import compose, initialize
 from omegaconf import DictConfig
 from sklearn.base import BaseEstimator, TransformerMixin
-
+from Costants import Costants
 
 class IasiPerBandPcaTransformer(BaseEstimator, TransformerMixin):
     
@@ -69,7 +69,7 @@ class IasiPerBandPcaTransformer(BaseEstimator, TransformerMixin):
 
                                      index=X_.index,  # use same indices as before
 
-                                     columns=["B1 IASI PC " + str(i + 1) for i in
+                                     columns=[Costants.IASI_PC_BND1 + " " + str(i + 1) for i in
 
                                               range(np.shape(pcs_bnd1)[1])])
 
@@ -77,14 +77,14 @@ class IasiPerBandPcaTransformer(BaseEstimator, TransformerMixin):
 
                                      index=X_.index,  # use same indices as before
 
-                                     columns=["B2 IASI PC " + str(i + 1) for i in
+                                     columns=[Costants.IASI_PC_BND2 + " " +  str(i + 1) for i in
 
                                               range(np.shape(pcs_bnd2)[1])])
 
         iasi_pcs = pd.concat([iasi_pcs_bnd1, iasi_pcs_bnd2], axis=1)
 
 
-        X_ = pd.concat([X_, iasi_pcs], axis=1)
+        X_ = pd.concat([iasi_pcs, X_], axis=1)
 
         return X_
 

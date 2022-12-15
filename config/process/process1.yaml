@@ -4,7 +4,5 @@ processing_columns:
   surface_pressure: Surface pressure
   ch4: CH4
   iasi_pc: IASI PC 
-  iasi_pc_bnd1: B1 IASI PC
-  iasi_pc_bnd2: B2 IASI PC
-  bnd1: B1
-  bnd2: B2
+  iasi_pcs_bnd1: 90
+  iasi_pcs_bnd2: 120
