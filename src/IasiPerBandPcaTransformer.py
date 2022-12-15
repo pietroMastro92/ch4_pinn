@@ -25,7 +25,7 @@ class IasiPerBandPcaTransformer(BaseEstimator, TransformerMixin):
 
 
     def transform(self, X):
-
+        costants = Costants()
         X_ = X.copy()
 
         # RECONSTRUCT NOISE FROM TRIANGULAR LOWER PART
@@ -69,7 +69,7 @@ class IasiPerBandPcaTransformer(BaseEstimator, TransformerMixin):
 
                                      index=X_.index,  # use same indices as before
 
-                                     columns=[Costants.IASI_PC_BND1 + " " + str(i + 1) for i in
+                                     columns=[costants.IASI_PC_BND1 + " " + str(i + 1) for i in
 
                                               range(np.shape(pcs_bnd1)[1])])
 
@@ -77,7 +77,7 @@ class IasiPerBandPcaTransformer(BaseEstimator, TransformerMixin):
 
                                      index=X_.index,  # use same indices as before
 
-                                     columns=[Costants.IASI_PC_BND2 + " " +  str(i + 1) for i in
+                                     columns=[costants.IASI_PC_BND2 + " " +  str(i + 1) for i in
 
                                               range(np.shape(pcs_bnd2)[1])])
 

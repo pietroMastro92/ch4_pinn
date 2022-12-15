@@ -66,12 +66,12 @@ def process_data(config: DictConfig):
 
 
 def process_input(X, iasi_noise_matrix, orth_base, iasi_pcs_bnd1, iasi_pcs_bnd2):
-
+    costants = Costants()
     #*DEFINING A PROCESSING PIPELINE
-    iasi_scaler_features_bnd1 = [Costants.IASI_PC_BND1 + " " + str(i + 1) for i in range(iasi_pcs_bnd1)]
-    iasi_scaler_features_bnd2 = [Costants.IASI_PC_BND2 + " " + str(i + 1) for i in range(iasi_pcs_bnd2)]
-    vza_scaler_features = [Costants.VZA]
-    surface_pressure_scaler_features = [Costants.SURFACE_PRESSURE]
+    iasi_scaler_features_bnd1 = [costants.IASI_PC_BND1 + " " + str(i + 1) for i in range(iasi_pcs_bnd1)]
+    iasi_scaler_features_bnd2 = [costants.IASI_PC_BND2 + " " + str(i + 1) for i in range(iasi_pcs_bnd2)]
+    vza_scaler_features = [costants.VZA]
+    surface_pressure_scaler_features = [costants.SURFACE_PRESSURE]
 
     scaler_preprocessor = ColumnTransformer(
                                             transformers=[('iasi1', StandardScaler(), iasi_scaler_features_bnd1),
@@ -84,8 +84,8 @@ def process_input(X, iasi_noise_matrix, orth_base, iasi_pcs_bnd1, iasi_pcs_bnd2)
 
     preprocessing_pipeline = Pipeline(
                              steps=[('iasi_noise', IasiNoiseTransformer(iasi_noise_matrix)),
-                                    ('iasi_pca', IasiPerBandPcaTransformer(orth_base[Costants.EUMETSAT_BND1],
-                                                                           orth_base[Costants.EUMETSAT_BND2])),
+                                    ('iasi_pca', IasiPerBandPcaTransformer(orth_base[costants.EUMETSAT_BND1],
+                                                                           orth_base[costants.EUMETSAT_BND2])),
                                     ('standard_scaling', scaler_preprocessor)
                                     ])
     X_processed = preprocessing_pipeline.fit_transform(X)
