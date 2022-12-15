@@ -84,6 +84,11 @@ target/
 *.swp
 *.swo
 
+# dataset
+*.joblib
+*.pkl
+*.hdf5
+
 # Mypy cache
 .mypy_cache/
 
@@ -92,3 +97,4 @@ target/
 
 # Hydra logs
 outputs
+raw_ch4.joblib

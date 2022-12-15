@@ -1,3 +1,10 @@
-use_columns: 
-  - col1
-  - col2
+processing_columns:
+  iasi_ch: IASI Channel
+  vza: vza
+  surface_pressure: Surface pressure
+  ch4: CH4
+  iasi_pc: IASI PC 
+  iasi_pc_bnd1: B1 IASI PC
+  iasi_pc_bnd2: B2 IASI PC
+  bnd1: B1
+  bnd2: B2

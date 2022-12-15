@@ -4,14 +4,18 @@ defaults:
   - _self_
 
 raw: 
-  path: data/raw/sample.csv
+  path: data/raw/raw_ch4.joblib
+  path_iasi_noise: data/raw/iasi_noise_matrix.joblib
+  path_orth_base: data/raw/orth_base.joblib
 
 processed:
   dir: data/processed
-  name: processed.csv
-  path: ${processed.dir}/${processed.name}
+  name_input: processed_input.joblib
+  path_input: ${processed.dir}/${processed.name_input}
+  name_output: processed_output.joblib
+  path_output: ${processed.dir}/${processed.name_output}
 
-final:
-  dir: data/final
-  name: final.csv
-  path: ${final.dir}/${final.name}
+#final:
+#  dir: data/final
+#  name: final.csv
+#  path: ${final.dir}/${final.name}
