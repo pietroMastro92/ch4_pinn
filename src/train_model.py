@@ -19,7 +19,7 @@ def train_model(config: DictConfig):
     print(f"Save the output to {output_path}")
 
 
-        # Synthetic data generated from sin function over [0, 2pi]
+    # Synthetic data generated from sin function over [0, 2pi]
     x_true = np.linspace(0, np.pi*2, 10000)
     y_true = np.sin(x_true)
     dy_true = np.cos(x_true)
