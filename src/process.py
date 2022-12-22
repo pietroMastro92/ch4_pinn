@@ -1,8 +1,8 @@
 """
 This is the demo code that uses hydra to access the parameters in under the directory config.
-
 Author: Pietro Mastro
 """
+
 import time
 import hydra
 import logging
@@ -28,7 +28,6 @@ def process_data(config: DictConfig):
     
     logging.info(f"Process data using {raw_path}")
 
-    # TODO: CREARE UNA CLASSE DI COSTANTI e USARE HYDRA PER QUELLO CHE SERVE NON COME PROXY PER LE COSTANTI
     # ? SHOULD WE LOAD/SAVE DATA USING A SPECIFIC FILE FORMAT
     # * FOR THE MOMENT WE ARE USING A PANDAS DATAFRAME SAVED WITH JOBLIB IN WICH THERE ARE ALL THE DATA NEEDED
     # * THE DATAFRAME HAS BEEN GENERATED USING THE 20% OF THE TOTAL DATASET OF SIMULATED MEASUREMENT FROM SIGMA-IASI
